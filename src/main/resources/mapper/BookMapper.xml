@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lwy.dao.BookMapper">
+    <!--目的是为了dao层提供sql语句而实现返回对象 ,这里的#{-}-是dao方法里面的参数名-->
+    <select id="queryById" resultType="Book" parameterType="Long">
+        SELECT
+            book_id,
+            name,
+            number
+        FROM
+            book
+        WHERE book_id = #{Id}
+    </select>
+
+    <select id="queryAll" resultType="Book">
+        SELECT
+            book_id,
+            name,
+            number
+        FROM
+            book
+        ORDER BY book_id
+        LIMIT #{offset},#{limit}
+    </select>
+    <update id="reduceNumber" >
+        UPDATE book
+		SET number = number - 1
+		WHERE
+			book_id = #{bookId}
+		AND number > 0
+    </update>
+</mapper>
